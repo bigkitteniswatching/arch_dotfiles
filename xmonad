@@ -1,0 +1,40 @@
+import XMonad
+import XMonad.Actions.PerWorkspaceKeys
+
+
+
+import qualified XMonad.StackSet as W
+
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.ManageDocks
+import XMonad.Util.Run(spawnPipe)
+import XMonad.Util.EZConfig
+import System.IO
+import XMonad.ManageHook
+import XMonad.Util.NamedScratchpad
+import XMonad.Layout.Grid
+import XMonad.Layout.Spacing
+import XMonad.Layout.LayoutModifier
+
+myTerminal = "kitty"
+myModMask = mod1Mask
+
+
+
+
+
+main = xmonad $ docks $ defaults
+-----------------------------------
+defaults      = defaultConfig {
+normalBorderColor = "#000000",
+terminal      = myTerminal,
+borderWidth   = 1,
+layoutHook    = spacing 50 $ avoidStruts (GridRatio (4/3) ||| Grid ||| Tall 3 (3/100) (1/2) ||| Tall 1 (3/100) (1/2))
+}
+-----------------------------------
+        `additionalKeys`
+        [   ((myModMask, xK_f), spawn "firefox")
+          , ((myModMask, xK_n), spawn "neovide")
+          , ((myModMask, xK_b), sendMessage ToggleStruts)
+
+        ]
